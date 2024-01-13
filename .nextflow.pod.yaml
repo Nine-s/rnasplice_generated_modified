@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: wise-gautier
+  name: distracted-ramanujan
   namespace: default
-  labels: {app: nextflow, runName: wise-gautier}
+  labels: {app: nextflow, runName: distracted-ramanujan}
 spec:
   restartPolicy: Never
   containers:
-  - name: wise-gautier
+  - name: distracted-ramanujan
     image: nextflow/nextflow:23.09.3-edge
     command: [/bin/bash, -c, source /etc/nextflow/init.sh; nextflow run Nine-s/rnasplice_generated_modified
-        -name wise-gautier -r master]
+        -name distracted-ramanujan -r master]
     env:
     - {name: NXF_WORK, value: /workspace/ninon/work}
     - {name: NXF_ASSETS, value: /workspace/projects}
@@ -25,4 +25,4 @@ spec:
   - name: vol-1
     persistentVolumeClaim: {claimName: nextflow-ninon}
   - name: vol-2
-    configMap: {name: nf-config-81928fd8}
+    configMap: {name: nf-config-e78a72d1}
