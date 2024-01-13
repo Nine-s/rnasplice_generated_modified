@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mad-brattain
+  name: grave-bassi
   namespace: default
-  labels: {app: nextflow, runName: mad-brattain}
+  labels: {app: nextflow, runName: grave-bassi}
 spec:
   restartPolicy: Never
   containers:
-  - name: mad-brattain
+  - name: grave-bassi
     image: nextflow/nextflow:23.09.3-edge
     command: [/bin/bash, -c, source /etc/nextflow/init.sh; nextflow run Nine-s/rnasplice_generated_modified
-        -name mad-brattain -r master]
+        -name grave-bassi -r master]
     env:
     - {name: NXF_WORK, value: /workspace/ninon/work}
     - {name: NXF_ASSETS, value: /workspace/projects}
@@ -25,4 +25,4 @@ spec:
   - name: vol-1
     persistentVolumeClaim: {claimName: nextflow-ninon}
   - name: vol-2
-    configMap: {name: nf-config-abba316d}
+    configMap: {name: nf-config-b063ba0f}
