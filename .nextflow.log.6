@@ -1,22 +1,22 @@
-Jan-11 20:16:00.490 [main] DEBUG nextflow.cli.Launcher - $> nextflow kuberun Nine-s/rnasplice_generated_modified -r master -c nextflow.config
-Jan-11 20:16:00.687 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/ninon/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.2,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@0.14.0
-Jan-11 20:16:00.701 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
-Jan-11 20:16:00.704 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
-Jan-11 20:16:00.708 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
-Jan-11 20:16:00.723 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
-Jan-11 20:16:00.742 [main] DEBUG nextflow.scm.ProviderConfig - Using SCM config path: /home/ninon/.nextflow/scm
-Jan-11 20:16:00.772 [main] DEBUG nextflow.scm.RepositoryFactory - Found Git repository result: [RepositoryFactory]
-Jan-11 20:16:00.786 [main] DEBUG nextflow.scm.RepositoryProvider - Request [credentials -:-] -> https://api.github.com/repos/Nine-s/rnasplice_generated_modified/contents/nextflow.config
-Jan-11 20:16:01.427 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /home/ninon/description_prototype/v1/generated_workflow_modified/nextflow.config
-Jan-11 20:16:01.434 [main] DEBUG nextflow.config.ConfigBuilder - User config file: https://github.com/Nine-s/rnasplice_generated_modified/nextflow.config
-Jan-11 20:16:01.435 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/ninon/description_prototype/v1/generated_workflow_modified/nextflow.config
-Jan-11 20:16:01.435 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/ninon/description_prototype/v1/generated_workflow_modified/nextflow.config
-Jan-11 20:16:01.436 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: https://github.com/Nine-s/rnasplice_generated_modified/nextflow.config
-Jan-11 20:16:01.436 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/ninon/description_prototype/v1/generated_workflow_modified/nextflow.config
-Jan-11 20:16:01.460 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
-Jan-11 20:16:02.276 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
-Jan-11 20:16:02.282 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
-Jan-11 20:16:02.373 [main] DEBUG nextflow.cli.Launcher - Operation aborted
+Jan-12 10:29:55.510 [main] DEBUG nextflow.cli.Launcher - $> nextflow kuberun Nine-s/rnasplice_generated_modified -r master -c nextflow.config
+Jan-12 10:29:55.710 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/ninon/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.2,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@0.14.0
+Jan-12 10:29:55.722 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Jan-12 10:29:55.723 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Jan-12 10:29:55.727 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Jan-12 10:29:55.748 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Jan-12 10:29:55.764 [main] DEBUG nextflow.scm.ProviderConfig - Using SCM config path: /home/ninon/.nextflow/scm
+Jan-12 10:29:55.800 [main] DEBUG nextflow.scm.RepositoryFactory - Found Git repository result: [RepositoryFactory]
+Jan-12 10:29:55.814 [main] DEBUG nextflow.scm.RepositoryProvider - Request [credentials -:-] -> https://api.github.com/repos/Nine-s/rnasplice_generated_modified/contents/nextflow.config
+Jan-12 10:29:56.490 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /home/ninon/description_prototype/v1/generated_workflow_modified/nextflow.config
+Jan-12 10:29:56.496 [main] DEBUG nextflow.config.ConfigBuilder - User config file: https://github.com/Nine-s/rnasplice_generated_modified/nextflow.config
+Jan-12 10:29:56.497 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/ninon/description_prototype/v1/generated_workflow_modified/nextflow.config
+Jan-12 10:29:56.498 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/ninon/description_prototype/v1/generated_workflow_modified/nextflow.config
+Jan-12 10:29:56.498 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: https://github.com/Nine-s/rnasplice_generated_modified/nextflow.config
+Jan-12 10:29:56.498 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/ninon/description_prototype/v1/generated_workflow_modified/nextflow.config
+Jan-12 10:29:56.523 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Jan-12 10:29:57.361 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Jan-12 10:29:57.445 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Jan-12 10:29:57.539 [main] DEBUG nextflow.cli.Launcher - Operation aborted
 nextflow.exception.AbortOperationException: Missing K8s storage volume claim -- The name of a persistence volume claim needs to be provided in the nextflow configuration file
 	at nextflow.k8s.K8sConfig.checkStorageAndPaths(K8sConfig.groovy:265)
 	at nextflow.k8s.K8sConfig$checkStorageAndPaths$0.call(Unknown Source)
