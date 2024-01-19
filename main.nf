@@ -22,8 +22,6 @@ include { TXIMPORT  } from '../../../ninon/description_prototype/rnasplice_modul
 include { DRIMSEQ_FILTER  } from '../../../ninon/description_prototype/rnasplice_modules/drimseq_filter.nf'
 include { DEXSEQ_DTU  } from '../../../ninon/description_prototype/rnasplice_modules/dexseq_dtu.nf'
 include { MULTIQC  } from '../../../ninon/description_prototype/rnasplice_modules/multiqc.nf'
-include { FASTQSPLIT as FASTQSPLIT_HISAT2 } from '../../../ninon/description_prototype/annotated_nextflow_modules/FASTQSPLIT.nf'
-include { SAMTOOLS_MERGE as SAMTOOLS_MERGE_HISAT2 } from '../../../ninon/description_prototype/annotated_nextflow_modules/SAMTOOLS.nf'
 
 workflow{
         read_pairs_ch = Channel
@@ -32,30 +30,28 @@ workflow{
             .map {row -> tuple(row.sample, [row.path_r1, row.path_r2], row.condition)}
             .view()
         
-FASTQC(read_pairs_ch)
-DEXSEQ_ANNOTATION(params.annotation_gtf)
-GFFREAD_TX2GENE(params.annotation_gtf)
-CUSTOM_GETCHROMSIZES(params.genome)
 SALMON_GENOMEGENERATE(params.genome, params.transcripts_fasta)
+CUSTOM_GETCHROMSIZES(params.genome)
 TRIMGALORE(read_pairs_ch)
+FASTQC(read_pairs_ch)
+GFFREAD_TX2GENE(params.annotation_gtf)
 HISAT2_INDEX(params.genome, params.annotation_gtf)
+DEXSEQ_ANNOTATION(params.annotation_gtf)
+HISAT2_ALIGN(TRIMGALORE.out.preprocessed_reads, HISAT2_INDEX.out.index, params.annotation_gtf)
 SALMON_QUANT(TRIMGALORE.out.preprocessed_reads, SALMON_GENOMEGENERATE.out.index)
-FASTQSPLIT_HISAT2(TRIMGALORE.out.preprocessed_reads)
+SAMTOOLS(HISAT2_ALIGN.out.sam)
 MERGE_RESULTS_SALMON(SALMON_QUANT.out.transcripts.collect())
-HISAT2_ALIGN(FASTQSPLIT_HISAT2.out.split_reads, HISAT2_INDEX.out.index, params.annotation_gtf)
-TXIMPORT(MERGE_RESULTS_SALMON.out.gathered_bam, GFFREAD_TX2GENE.out.tx2gene)
-SAMTOOLS_MERGE_HISAT2(HISAT2_ALIGN.out.sam.collect())
-SAMTOOLS(SAMTOOLS_MERGE_HISAT2.out.merged)
-MULTIQC(SALMON_QUANT.out.json_info.collect(), TRIMGALORE.out.log.collect(), HISAT2_ALIGN.out.log_final.collect(), FASTQC.out.zip.collect())
 DEXSEQ_COUNT(SAMTOOLS.out.bam, DEXSEQ_ANNOTATION.out.gff, params.alignment_quality)
+MULTIQC(SALMON_QUANT.out.json_info.collect(), TRIMGALORE.out.log.collect(), HISAT2_ALIGN.out.log_final.collect(), FASTQC.out.zip.collect())
+TXIMPORT(MERGE_RESULTS_SALMON.out.gathered_bam, GFFREAD_TX2GENE.out.tx2gene)
 BEDTOOLS_GENOMECOV(SAMTOOLS.out.bam)
+MERGE_RESULTS_DEXSEQ(DEXSEQ_COUNT.out.dexseq_clean_txt.collect())
 DRIMSEQ_FILTER(TXIMPORT.out.txi_dtu, TXIMPORT.out.tximport_tx2gene, params.csv_input, params.min_samps_gene_expr, params.min_samps_feature_expr, params.min_samps_feature_prop, params.min_feature_expr, params.min_feature_prop, params.min_gene_expr)
+DEXSEQ_EXON(MERGE_RESULTS_DEXSEQ.out.clean_counts, DEXSEQ_ANNOTATION.out.gff, params.csv_input, params.csv_contrastsheet, params.n_dexseq_plot)
+DEXSEQ_DTU(DRIMSEQ_FILTER.out.drimseq_samples_tsv, DRIMSEQ_FILTER.out.drimseq_counts_tsv, params.csv_contrastsheet, params.n_dexseq_plot)
 BEDCLIP_FORWARD(BEDTOOLS_GENOMECOV.out.bedgraph_forward, CUSTOM_GETCHROMSIZES.out.sizes)
 BEDCLIP_REVERSE(BEDTOOLS_GENOMECOV.out.bedgraph_reverse, CUSTOM_GETCHROMSIZES.out.sizes)
-MERGE_RESULTS_DEXSEQ(DEXSEQ_COUNT.out.dexseq_clean_txt.collect())
-BEDGRAPH_TO_BIGWIG_FORWARD(BEDCLIP_FORWARD.out.bedgraph, CUSTOM_GETCHROMSIZES.out.sizes)
 BEDGRAPH_TO_BIGWIG_REVERSE(BEDCLIP_REVERSE.out.bedgraph, CUSTOM_GETCHROMSIZES.out.sizes)
-DEXSEQ_DTU(DRIMSEQ_FILTER.out.drimseq_samples_tsv, DRIMSEQ_FILTER.out.drimseq_counts_tsv, params.csv_contrastsheet, params.n_dexseq_plot)
-DEXSEQ_EXON(MERGE_RESULTS_DEXSEQ.out.clean_counts, DEXSEQ_ANNOTATION.out.gff, params.csv_input, params.csv_contrastsheet, params.n_dexseq_plot)
+BEDGRAPH_TO_BIGWIG_FORWARD(BEDCLIP_FORWARD.out.bedgraph, CUSTOM_GETCHROMSIZES.out.sizes)
 
 }

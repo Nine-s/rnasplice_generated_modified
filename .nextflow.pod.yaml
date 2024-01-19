@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: distracted-ramanujan
+  name: boring-bohr
   namespace: default
-  labels: {app: nextflow, runName: distracted-ramanujan}
+  labels: {app: nextflow, runName: boring-bohr}
 spec:
   restartPolicy: Never
   containers:
-  - name: distracted-ramanujan
+  - name: boring-bohr
     image: nextflow/nextflow:23.09.3-edge
     command: [/bin/bash, -c, source /etc/nextflow/init.sh; nextflow run Nine-s/rnasplice_generated_modified
-        -name distracted-ramanujan -r master]
+        -name boring-bohr -resume last -r master]
     env:
     - {name: NXF_WORK, value: /workspace/ninon/work}
     - {name: NXF_ASSETS, value: /workspace/projects}
@@ -25,4 +25,4 @@ spec:
   - name: vol-1
     persistentVolumeClaim: {claimName: nextflow-ninon}
   - name: vol-2
-    configMap: {name: nf-config-e78a72d1}
+    configMap: {name: nf-config-c66df487}
